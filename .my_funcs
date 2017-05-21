@@ -1,0 +1,71 @@
+echo -e ""
+
+RANGE=900
+number=$RANDOM
+let "number %= $RANGE"
+let "number += 100"
+
+echo -e "Fortune #$number"
+echo -e "------------"
+fortune -a
+
+echo -e ""
+
+function gedit() { `which gedit` $@ & disown; }
+
+export GCC_COLORS="always"
+
+function new_util {
+	echo "#include \"$1.hh\"" >> $1.cpp
+	echo -e "#include <stdio.h>\n" >> $1_test.cpp
+	echo "#include \"$1.hh\"" >> $1_test.cpp
+	echo -e "
+int main(int argc, char *argv[])
+{
+	return(0);
+}\n" >> $1_test.cpp	
+	echo "#ifndef __${1^^}_HH__" >> $1.hh
+	echo "#define __${1^^}_HH__" >> $1.hh
+	echo "#endif /* __${1^^}_HH__ */" >> $1.hh
+		
+	vim -p $1.hh $1.cpp $1_test.cpp
+}
+
+function new_util+ {
+	echo "#include \"$1.hh\"" >> $1.cpp
+	echo -e "#include <iostream>\n" >> $1_test.cpp
+	echo "#include \"$1.hh\"" >> $1_test.cpp
+	echo -e "
+int main(int argc, char *argv[])
+{
+	return(0);
+}\n" >> $1_test.cpp	
+	echo "#ifndef __${1^^}_HH__" >> $1.hh
+	echo "#define __${1^^}_HH__" >> $1.hh
+	echo "#endif /* __${1^^}_HH__ */" >> $1.hh
+		
+	vim -p $1.hh $1.cpp $1_test.cpp
+}
+
+alias gtsvn='cd ~/svn/Proj/src'
+alias gcc='gcc-4.9'
+alias gc='gcc-4.9 -std=c89 -ansi -Wall -pedantic -Werror -DNDEBUG'
+alias gd='gcc-4.9 -std=c89 -ansi -Wall -pedantic -Werror -D_DEBUG -g'
+alias gne='gcc-4.9 -ansi -Wall -pedantic -DNDEBUG'
+alias gc9='gcc-4.9 -std=c99 -Wall -pedantic -Werror -DNDEBUG'
+alias gd9='gcc-4.9 -std=c99 -Wall -pedantic -Werror -D_DEBUG'
+alias gc+='g++-4.9 -std=c++98 -Wall -pedantic -Werror -DNDEBUG'
+alias gd+='g++-4.9 -std=c++98 -Wall -pedantic -Werror -D_DEBUG'
+alias gce+='g++-4.9 -std=c++98 -Wall -pedantic -DNDEBUG'
+alias gde+='g++-4.9 -std=c++98 -Wall -pedantic -D_DEBUG'
+alias gc+1='g++-4.9 -std=c++11 -Wall -pedantic -Werror -DNDEBUG'
+alias gd+1='g++-4.9 -std=c++11 -Wall -pedantic -Werror -D_DEBUG'
+
+alias svc="sshpass -p301541355 svn ci -m"
+alias svu="sshpass -p301541355 svn update"
+alias svl="sshpass -p301541355 svn log"
+alias svls="sshpass -p301541355 svn list"
+alias svrm="svn delete"
+alias sva="svn add"
+alias svclc="svn cleanup"
+alias svstt="svn status"
